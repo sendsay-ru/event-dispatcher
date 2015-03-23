@@ -1,0 +1,16 @@
+{
+  "name": "sendsay.event-dispatcher",
+  "version": "0.0.1",
+  "homepage": "https://github.com/sendsay-ru/event-dispatcher",
+  "authors": [
+    "zoux"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
