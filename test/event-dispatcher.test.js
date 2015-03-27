@@ -104,4 +104,39 @@ describe('EventDispatcher:', function() {
     expect(handler.callCount).to.eq(2);
   })
 
+  it('once bind and trigger one event', function() {
+    dispacher = new EventDispatcher();
+
+    handler = function() {
+      handler.callCount = handler.callCount ? handler.callCount + 1 : 1;
+    }
+
+    dispacher.once('a', handler);
+
+    dispacher.trigger('a');
+    dispacher.trigger('a');
+    dispacher.trigger('a');
+
+    expect(handler.callCount).to.eq(1);
+  })
+
+  it('once bind and trigger multiplie events', function() {
+    dispacher = new EventDispatcher();
+
+    handler = function() {
+      handler.callCount = handler.callCount ? handler.callCount + 1 : 1;
+    }
+
+    dispacher.once('a b c', handler);
+
+    dispacher.trigger('a');
+    dispacher.trigger('a');
+    dispacher.trigger('b');
+    dispacher.trigger('b');
+    dispacher.trigger('c');
+    dispacher.trigger('c');
+
+    expect(handler.callCount).to.eq(3);
+  })
+
 })

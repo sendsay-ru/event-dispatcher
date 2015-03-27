@@ -6,6 +6,15 @@ do (root = this, factory = (root, EventDispatcher) ->
       @_handlers = {}
       @_splitter = options.splitter || /[\s,]+/
 
+    once: (name = '', callback, ctx = this) ->
+      names = name.split @_splitter
+      for name in names
+        do (name) =>
+          temp = (args...) ->
+            callback.call(ctx, args...)
+            @off name, temp
+          @on name, temp
+
     on: (name = '', callback, ctx = this) ->
       names = name.split @_splitter
       for name in names

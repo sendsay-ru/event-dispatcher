@@ -18,6 +18,34 @@ var slice = [].slice;
       this._splitter = options.splitter || /[\s,]+/;
     }
 
+    EventDispatcher.prototype.once = function(name, callback, ctx) {
+      var i, len, names, results;
+      if (name == null) {
+        name = '';
+      }
+      if (ctx == null) {
+        ctx = this;
+      }
+      names = name.split(this._splitter);
+      results = [];
+      for (i = 0, len = names.length; i < len; i++) {
+        name = names[i];
+        results.push((function(_this) {
+          return function(name) {
+            var temp;
+            temp = function() {
+              var args;
+              args = 1 <= arguments.length ? slice.call(arguments, 0) : [];
+              callback.call.apply(callback, [ctx].concat(slice.call(args)));
+              return this.off(name, temp);
+            };
+            return _this.on(name, temp);
+          };
+        })(this)(name));
+      }
+      return results;
+    };
+
     EventDispatcher.prototype.on = function(name, callback, ctx) {
       var handlers, i, len, names;
       if (name == null) {
